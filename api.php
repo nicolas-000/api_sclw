@@ -7,7 +7,7 @@ header("Content-Type:application/json");
 
 if(isset($_GET['id'])){
     $id_get = $_GET['id'];
-    $query = "SELECT id_epp, nombre, marca, stock, id_cargo, descripcion FROM epps WHERE id_epp = '"."$id_get"."'";
+    $query = "SELECT epps.id_epp, epps.nombre, epps.marca, epps.stock, epps.id_cargo, epps.descripcion, cargos.nombre AS 'nombre_cargo' FROM epps LEFT JOIN cargos ON epps.id_cargo = cargos.id_cargo WHERE id_epp = '"."$id_get"."';";
 
     $resultado = mysqli_query($connect, $query);
     $datos = mysqli_fetch_assoc($resultado);
@@ -16,7 +16,7 @@ if(isset($_GET['id'])){
 
     $respuesta_json = json_encode($datos);
 }else{
-    $query = "SELECT id_epp, nombre, marca, stock, id_cargo, descripcion FROM epps";
+    $query = "SELECT epps.id_epp, epps.nombre, epps.marca, epps.stock, epps.id_cargo, epps.descripcion, cargos.nombre AS 'nombre_cargo' FROM epps LEFT JOIN cargos ON epps.id_cargo = cargos.id_cargo;";
     $resultado = mysqli_query($connect, $query);
 
     $respuesta_json = "";
